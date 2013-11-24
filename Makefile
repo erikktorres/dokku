@@ -1,5 +1,5 @@
 DOKKU_VERSION = master
-
+BUILDSTEP ?= progrium/buildstep
 SSHCOMMAND_URL ?= https://raw.github.com/progrium/sshcommand/master/sshcommand
 PLUGINHOOK_URL ?= https://s3.amazonaws.com/progrium-pluginhook/pluginhook_0.1.0_amd64.deb
 STACK_URL ?= github.com/tidepool-org/buildstep
@@ -49,9 +49,9 @@ aufs:
 
 stack:
 ifdef BUILD_STACK
-	@docker images | grep progrium/buildstep || docker build -t progrium/buildstep ${STACK_URL}
+	@docker images | grep ${BUILDSTEP} || docker build -t ${BUILDSTEP} ${STACK_URL}
 else
-	@docker images | grep progrium/buildstep || curl ${PREBUILT_STACK_URL} | gunzip -cd | docker import - progrium/buildstep
+	@docker images | grep ${BUILDSTEP} || curl ${PREBUILT_STACK_URL} | gunzip -cd | docker import - ${BUILDSTEP}
 endif
 
 count:
